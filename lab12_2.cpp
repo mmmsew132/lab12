@@ -1,5 +1,7 @@
 #include<iostream>
 #include<string>
+#include<cstdlib>
+#include<ctime>
 
 using namespace std;
 
@@ -7,29 +9,48 @@ string cardNames[] = {"","A","2","3","4","5","6","7","8","9","10","J","Q","K"};
 int cardScores[] = {0,1,2,3,4,5,6,7,8,9,10,10,10,10};
 
 int drawCard(void){
-	//Write the function to random the number from 1 to 13 and return that random number.
+	int i = rand()%13;
+	return i+1;
 }
 
 int calScore(int x,int y,int z){
-	//Write the function to calculate the score with is the rightmost digit of summation of the scores from three cards.
-	//Return the score. 
+	if (x > 10) {
+		x = 10;
+	}
+	if (y > 10) {
+		y = 10;
+	}
+	if (y > 10) {
+		y = 10;
+	}
+	int score = (x+y+z)%10;
+	return score;
 }
 
 int findYugiAction(int s){	
-	if(s == 9) return 2; // Yugi will definitely stay (2) when current score (s) is equal to 9
-	else if(s < 6) return 1; // Yugi will definitely draw (1) when current score (s) is less than 6
+	if(s == 9) return 2;
+	else if(s < 6) return 1;
 	else{
-		// If current score is 6,7,8, Yugi will draw with probability 69% and will stay with probability 31% 
-		// Write conditions here using random number 
+		if (s < 9 && s >= 6) {
+			int i = rand()%100;
+			if (i <= 69) return 1;
+		} else {
+			return 2;
+		}
 	}
 }
 
 void checkWinner(int p, int y){
-	// Write condition for cout in this function
 	cout << "\n---------------------------------\n";
-	cout <<   "|             Draw!!!           |"; // when p is equal to y
-	cout <<   "|         Player wins!!!        |"; // when p is greater than y
-	cout <<   "|          Yugi wins!!!         |"; // when p is less than y
+	if ( p == y) {
+		cout <<   "|             Draw!!!           |";
+	}
+	if ( p > y) {
+		cout <<   "|         Player wins!!!        |";
+	}
+	if ( p < y) {
+		cout <<   "|          Yugi wins!!!         |";
+	}
 	cout << "\n---------------------------------\n";
 }
 
